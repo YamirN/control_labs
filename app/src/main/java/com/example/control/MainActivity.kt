@@ -10,29 +10,28 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MainActivity : AppCompatActivity() {
+    // Instancia de Firestore
+    private lateinit var firestore: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Referencias a los elementos del layout
-        val inputDocente = findViewById<EditText>(R.id.inputDocente)
-        val inputLaboratorio = findViewById<EditText>(R.id.inputLaboratorio)
-        val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
+        // Inicializar Firestore
+        firestore = FirebaseFirestore.getInstance()
 
-        // Configurar el evento del botón
-        btnRegistrar.setOnClickListener {
-            val docenteId = inputDocente.text.toString().trim()
-            val laboratorioId = inputLaboratorio.text.toString().trim()
+        // Referencia al botón
+        val btnSubirRegistro = findViewById<Button>(R.id.btnRegistrar)
 
-            // Validar campos vacíos
-            if (docenteId.isEmpty() || laboratorioId.isEmpty()) {
-                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // Registrar el acceso
+        // Evento del botón
+        btnSubirRegistro.setOnClickListener {
+            // Aquí puedes obtener los valores dinámicamente, por ejemplo, de un formulario o argumentos
+            val docenteId = "D001" // Reemplaza con el ID real
+            val laboratorioId = "Lab301" // Reemplaza con el ID real
             registrarAcceso(docenteId, laboratorioId)
         }
     }
@@ -40,14 +39,19 @@ class MainActivity : AppCompatActivity() {
     private fun registrarAcceso(docenteId: String, laboratorioId: String) {
         // Obtener instancia de Firestore
         val db = FirebaseFirestore.getInstance()
-
+        val fechaActual = LocalDate.now().toString() // Formato: "YYYY-MM-DD"
+        val horaActual = LocalTime.now().toString() // Formato: "HH:mm:ss"
         // Crear el registro
         val registro = hashMapOf(
-            "docente_id" to docenteId,
-            "laboratorio_id" to laboratorioId,
-            "fecha" to FieldValue.serverTimestamp(),
-            "estado" to "Pendiente" // Estado inicial
+            "id_docente" to docenteId,           // ID del docente
+            "laboratorio_id" to laboratorioId,     // ID del laboratorio
+            "curso" to "ingenieria de software", // Curso asignado
+            "fecha" to fechaActual,          // Fecha del registro
+            "hora_entrada" to horaActual,        // Hora de entrada
+            "hora_salida" to null,            // Hora de salida (inicialmente null)
+            "estado" to "En curso"            // Estado del acceso
         )
+
 
         // Guardar en Firestore
         db.collection("registros_acceso")
