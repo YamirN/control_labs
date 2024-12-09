@@ -21,22 +21,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         // Inicializar Firestore
         firestore = FirebaseFirestore.getInstance()
+
+        val etDocenteId = findViewById<EditText>(R.id.inputDocente)
+        val etLaboratorioId = findViewById<EditText>(R.id.inputLaboratorio)
+        val etCurso = findViewById<EditText>(R.id.inputCurso)
 
         // Referencia al botón
         val btnSubirRegistro = findViewById<Button>(R.id.btnRegistrar)
 
         // Evento del botón
         btnSubirRegistro.setOnClickListener {
-            // Aquí puedes obtener los valores dinámicamente, por ejemplo, de un formulario o argumentos
-            val docenteId = "D001" // Reemplaza con el ID real
-            val laboratorioId = "Lab301" // Reemplaza con el ID real
-            registrarAcceso(docenteId, laboratorioId)
+            val docenteId = etDocenteId.text.toString().trim()
+            val laboratorioId = etLaboratorioId.text.toString().trim()
+            val curso = etCurso.text.toString().trim()
+            // Validar que los campos no estén vacíos
+            if (docenteId.isNotEmpty() && laboratorioId.isNotEmpty() && curso.isNotEmpty()) {
+                // Llamar a la función para registrar el acceso
+                registrarAcceso(docenteId, laboratorioId, curso)
+            } else {
+                // Mostrar un mensaje de error si falta algún campo
+                Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun registrarAcceso(docenteId: String, laboratorioId: String) {
+    private fun registrarAcceso(docenteId: String, laboratorioId: String, curso: String) {
         // Obtener instancia de Firestore
         val db = FirebaseFirestore.getInstance()
         val fechaActual = LocalDate.now().toString() // Formato: "YYYY-MM-DD"
