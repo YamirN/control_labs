@@ -12,11 +12,12 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     // Instancia de Firestore
     private lateinit var firestore: FirebaseFirestore
-
+    private lateinit var registroId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             val horaSalida = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
 
             // Actualizar el registro en Firestore
-            val registroActualizado = hashMapOf(
+            val registroActualizado: MutableMap<String, Any> = hashMapOf(
                 "hora_salida" to horaSalida,   // Marcar la hora de salida
                 "estado" to "Completado"       // Cambiar el estado a "Completado"
             )
@@ -97,11 +98,11 @@ class MainActivity : AppCompatActivity() {
                 .document(registroId)
                 .update(registroActualizado)
                 .addOnSuccessListener {
-                    Log.d("Firestore", "Registro actualizado exitosamente")
+
                     Toast.makeText(this, "Salida registrada", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.w("Firestore", "Error al actualizar el registro", e)
+
                     Toast.makeText(this, "Error al registrar salida", Toast.LENGTH_SHORT).show()
                 }
         } else {

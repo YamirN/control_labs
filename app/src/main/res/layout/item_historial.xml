@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_docente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Docente"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_laboratorio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Laboratorio"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_curso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Curso"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_fecha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Fecha"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_hora_entrada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Hora Entrada"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_hora_salida"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Hora Salida"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="14sp" />
+</LinearLayout>
